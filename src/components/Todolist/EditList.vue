@@ -13,12 +13,12 @@
     </header>
     <div class="todo">
       <div class="text">
-        <p v-show="inputSelected === false">{{ text }}</p>
+        <p v-show="inputSelected === false">{{ todo.text }}</p>
         <input
           v-show="inputSelected"
           class="modelinput"
           type="text"
-          :value="text"
+          :value="todo.text"
           ref="EditingTodoText"
           :id="id"
         />
@@ -28,6 +28,7 @@
     </div>
     <!-- <priority-list @newpriorty="newpriorty" ></priority-list> -->
     <priority-list v-model="prioritySelcted"></priority-list>
+    <!-- <priority-list v-model="todo.priorty"></priority-list> -->
     <div class="footer">
       <button @click="closemodel" class="close">CLOSE</button>
       <button @click="SubmitData" class="save">SAVE CHANGES</button>
@@ -41,14 +42,15 @@ import ErrorCard from "../UI/ErrorCard.vue";
 import BaseCard from "../UI/BaseCard.vue";
 export default {
   props: {
-    text: String,
-    id: Number,
-    todolist: Object,
-    date: Date,
+    // text: String,
+    // id: Number,
+    // todolist: Object,
+    // date: Date,
     todo: Object,
   },
   created() {
     this.editableTodo = {...this.todo}
+    console.log(this.editableTodo);
   },
   data() {
     return {
@@ -68,6 +70,7 @@ export default {
   },
   methods: {
     pargClicked() {
+      
       this.inputSelected = true;
     },
     SubmitData() {
@@ -76,16 +79,22 @@ export default {
         this.inputIsInvalid = true;
         return;
       }
-      const newToDoObj = {
-        id: this.id,
+      // const newToDoObj = {
+      //   id: this.id,
+      //   text: enteredTodoText,
+      //   priorty: this.prioritySelcted,
+      //   date: this.date,
+      //   action: false,
+      // };
+      this.editableTodo = {
+        id: this.editableTodo.id,
         text: enteredTodoText,
         priorty: this.prioritySelcted,
-        date: this.date,
+        date: this.editableTodo.date,
         action: false,
       };
-      this.$emit("editData", newToDoObj, this.id);
-      console.log(this.prioritySelcted);
-      console.log(newToDoObj);
+      this.$emit("editData", this.editableTodo, this.editableTodo.id);
+      console.log(this.editableTodo);
     },
     newpriorty(priorty) {
       this.prioritySelcted = priorty;

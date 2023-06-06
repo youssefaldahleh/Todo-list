@@ -180,6 +180,7 @@ export default {
     editData(newEditTodo, editId) {
       const newTodo = this.todolist.findIndex((todo) => todo.id === editId);
       this.todolist[newTodo] = newEditTodo;
+      console.log(newTodo);
       console.log(newEditTodo);
       this.displayModel = false;
     },

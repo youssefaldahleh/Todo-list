@@ -62,7 +62,11 @@ export default {
   props: {
     modelValue: {
       type: String,
+
     },
+    oldPriority:{
+      type:Object
+    }
   },
   emits: ["update:modelValue"],
   data() {
@@ -80,6 +84,8 @@ export default {
       // console.log(priorty.target.value)
       this.$emit("update:modelValue", priorty);
       console.log(priorty);
+
+      console.log(this.oldPriority);
     },
   },
 };
